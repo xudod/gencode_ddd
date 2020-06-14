@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xudod.gen_code.column_info.domain.mapper.ColumnInfoMapper">
+  <resultMap id="BaseResultMap" type="com.xudod.gen_code.column_info.domain.entity.po.ColumnInfo">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="table_id" jdbcType="VARCHAR" property="tableId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name_cn" jdbcType="VARCHAR" property="nameCn" />
+    <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
+    <result column="column_type" jdbcType="VARCHAR" property="columnType" />
+    <result column="column_len" jdbcType="INTEGER" property="columnLen" />
+    <result column="decimal_point" jdbcType="INTEGER" property="decimalPoint" />
+    <result column="null_is" jdbcType="CHAR" property="nullIs" />
+    <result column="key_is" jdbcType="CHAR" property="keyIs" />
+    <result column="check_type" jdbcType="VARCHAR" property="checkType" />
+    <result column="check_value" jdbcType="VARCHAR" property="checkValue" />
+    <result column="page_title" jdbcType="VARCHAR" property="pageTitle" />
+    <result column="new_show" jdbcType="CHAR" property="newShow" />
+    <result column="edit_use" jdbcType="CHAR" property="editUse" />
+    <result column="table_show" jdbcType="CHAR" property="tableShow" />
+    <result column="public_is" jdbcType="CHAR" property="publicIs" />
+    <result column="sequence" jdbcType="INTEGER" property="sequence" />
+    <result column="part_sequence" jdbcType="VARCHAR" property="partSequence" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="inf_status" jdbcType="VARCHAR" property="infStatus" />
+    <result column="able_status" jdbcType="VARCHAR" property="ableStatus" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="deleted" jdbcType="VARCHAR" property="deleted" />
+    <result column="client_type" jdbcType="VARCHAR" property="clientType" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, table_id, name, name_cn, name_en, column_type, column_len, decimal_point, null_is, key_is, 
+    check_type, check_value, page_title, new_show, edit_use, table_show, 
+    public_is, sequence, remark, inf_status, able_status, version, deleted, client_type, 
+    create_by, create_time, modify_by, modify_time
+  </sql>
+</mapper>

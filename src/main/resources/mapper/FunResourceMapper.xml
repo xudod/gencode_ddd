@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xudod.gen_code.fun_resource.domain.mapper.FunResourceMapper">
+  <resultMap id="BaseResultMap" type="com.xudod.gen_code.fun_resource.domain.entity.po.FunResource">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="show_name_cn" jdbcType="VARCHAR" property="showNameCn" />
+    <result column="show_name_en" jdbcType="VARCHAR" property="showNameEn" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="belong_sys" jdbcType="VARCHAR" property="belongSys" />
+    <result column="pid" jdbcType="VARCHAR" property="pid" />
+    <result column="img_num" jdbcType="VARCHAR" property="imgNum" />
+    <result column="pertain_sys" jdbcType="VARCHAR" property="pertainSys" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="sequence" jdbcType="INTEGER" property="sequence" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="public_able" jdbcType="VARCHAR" property="publicAble" />
+    <result column="shared_able" jdbcType="VARCHAR" property="sharedAble" />
+    <result column="inf_status" jdbcType="VARCHAR" property="infStatus" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="deleted" jdbcType="VARCHAR" property="deleted" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="client_type" jdbcType="VARCHAR" property="clientType" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, show_name_cn, show_name_en, code, type, url, belong_sys, pid, img_num, 
+    pertain_sys, level, sequence, remark, public_able, shared_able, inf_status, status, 
+    version, deleted, user_id, org_id, app_id, client_type, create_by, create_time, modify_by, 
+    modify_time
+  </sql>
+</mapper>

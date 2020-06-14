@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xudod.gen_code.domain_info.domain.mapper.DomainInfoMapper">
+  <resultMap id="BaseResultMap" type="com.xudod.gen_code.domain_info.domain.entity.po.DomainInfo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="cn_name" jdbcType="VARCHAR" property="cnName" />
+    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="manage_type" jdbcType="VARCHAR" property="manageType" />
+    <result column="charge" jdbcType="VARCHAR" property="charge" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="db_ip" jdbcType="VARCHAR" property="dbIp" />
+    <result column="db_port" jdbcType="VARCHAR" property="dbPort" />
+    <result column="db_user" jdbcType="VARCHAR" property="dbUser" />
+    <result column="db_password" jdbcType="VARCHAR" property="dbPassword" />
+    <result column="db_name" jdbcType="VARCHAR" property="dbName" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
+    <result column="artifact_id" jdbcType="VARCHAR" property="artifactId" />
+    <result column="project_port" jdbcType="VARCHAR" property="projectPort" />
+    <result column="snow_id_seq" jdbcType="VARCHAR" property="snowIdSeq" />
+    <result column="dev_ip" jdbcType="VARCHAR" property="devIp" />
+    <result column="test_ip" jdbcType="VARCHAR" property="testIp" />
+    <result column="uat_ip" jdbcType="VARCHAR" property="uatIp" />
+    <result column="prod_ip" jdbcType="VARCHAR" property="prodIp" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="sequence" jdbcType="INTEGER" property="sequence" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="inf_status" jdbcType="VARCHAR" property="infStatus" />
+    <result column="use_status" jdbcType="VARCHAR" property="useStatus" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="deleted" jdbcType="VARCHAR" property="deleted" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cn_name, project_id, manage_type, charge, create_date, company, db_ip, db_port, 
+    db_user, db_password, db_name, author, group_id, artifact_id, project_port, 
+    snow_id_seq, dev_ip, test_ip, uat_ip, prod_ip, 
+    description, sequence, remark, inf_status, use_status, version, 
+    deleted, app_id, create_by, create_time, modify_by, modify_time
+  </sql>
+  <!--   <select id="getUserSchedule" resultMap="getUserScheduleResultMap"> -->
+<!-- 	SELECT id, emp_mdm_code, schedule_code, attend_day, day_name FROM emp_attendance_status -->
+<!-- 	WHERE str_to_date(attend_day,'%Y-%m-%d') <![CDATA[ >= ]]> cast(#{startDate} as date)  -->
+<!--     and str_to_date(attend_day,'%Y-%m-%d') <![CDATA[ <= ]]> cast(#{endDate} as date)) -->
+<!--   </select> -->
+<!--   <resultMap id="getUserScheduleResultMap" type="com.xudod.attendance.emp_attendance_status.domain.entity.bo.UserScheduleMidleResBo"> -->
+<!--     <id column="id" jdbcType="VARCHAR" property="id" /> -->
+<!--     <result column="emp_mdm_code" jdbcType="VARCHAR" property="empMdmCode" /> -->
+<!--     <result column="schedule_code" jdbcType="VARCHAR" property="scheduleCode" /> -->
+<!--     <result column="attend_day" jdbcType="VARCHAR" property="attendDay" /> -->
+<!--     <result column="day_name" jdbcType="VARCHAR" property="dayName" /> -->
+<!--   </resultMap> -->
+</mapper>

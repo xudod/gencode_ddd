@@ -1,0 +1,31 @@
+server:
+  port: 11000
+spring:
+  profiles: dev
+  application:
+    name: xudod-gen-code
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.68.135:3306/xudod_gen_code?serverTimezone=GMT%2B8&amp&useSSL=false&amp&nullCatalogMeansCurrent = true
+    username: root
+    password: 111111
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.xudod.gen_code.*.domain.mapper  # 注意：对应实体类的路径
+logging:
+  level:
+    com.xudod.gen_code.domain_info.domain.mapper:
+      debug
+    com.xudod.gen_code.core_process.domain.mapper:
+      debug
+    com.xudod.gen_code.column_info.domain.mapper:
+      debug
+    com.xudod.gen_code.fun_resource.domain.mapper:
+      debug
+    com.xudod.gen_code.project_info.domain.mapper:
+      debug
+    com.xudod.gen_code.table_base_info.domain.mapper:
+      debug
+snowid:
+  workerId: 1     #工作机器ID
+  datacenterId: 1   # 序列号
