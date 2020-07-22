@@ -15,6 +15,8 @@ import com.xudod.gen_code.common.OnlyId;
 import com.xudod.gen_code.common.PageParameter;
 import com.xudod.gen_code.fun_resource.domain.entity.po.FunResource;
 import com.xudod.gen_code.fun_resource.domain.service.FunResourceService;
+import com.xudod.gen_code.fun_resource.interfaces.vo.FunResourceTreeVo;
+import com.xudod.gen_code.fun_resource.interfaces.vo.GetAllTreePramVo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -66,10 +68,17 @@ public class FunResourceController {
 	/*代码分界end TODO*/
 
     @ApiOperation(value = "查询所有数据", notes = "查询所有数据")
-    @RequestMapping(value = "getAll", method=RequestMethod.POST, consumes= "application/json; charset=utf-8")
+    @RequestMapping(value = "getall", method=RequestMethod.POST, consumes= "application/json; charset=utf-8")
     ResponseEntity<BaseResp<List<FunResource>>> getAll(@RequestBody Object object){
         return new ResponseEntity<BaseResp<List<FunResource>>> (
         	BaseResp.returnRes(200, funResourceService.getAll(), "查询成功！"), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "查询所有数据树", notes = "查询所有数据树")
+    @RequestMapping(value = "getalltree", method=RequestMethod.POST, consumes= "application/json; charset=utf-8")
+    ResponseEntity<BaseResp<List<FunResourceTreeVo>>> getalltree(@RequestBody GetAllTreePramVo getAllTreePramVo){
+        return new ResponseEntity<BaseResp<List<FunResourceTreeVo>>> (
+        	BaseResp.returnRes(200, funResourceService.getalltree(getAllTreePramVo.getSysCode()), "查询成功！"), HttpStatus.OK);
     }
 
 }

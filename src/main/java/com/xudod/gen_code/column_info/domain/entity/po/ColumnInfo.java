@@ -23,6 +23,16 @@ public class ColumnInfo {
 
 	@ApiModelProperty(example = "字段名", position = 2)
     private String name;
+	
+	// 数据库无该字段，用于生成Mapper和实体类。
+    @TableField(exist = false)
+	@ApiModelProperty(example = "首字母小写，驼峰式字段名,用于生成Mapper和实体类", position = 2)
+    private String nameUpperCamel;
+	
+	// 数据库无该字段，用于拼接实体的getset方法
+    @TableField(exist = false)
+	@ApiModelProperty(example = "首字母大写，驼峰式字段名,用于拼接实体的getset方法", position = 2)
+    private String nameHeadUpperCamel;
 
     @ApiModelProperty(example = "字段中文名，用于属性注解和页面展示", position = 3)
     private String nameCn;
@@ -557,4 +567,22 @@ public class ColumnInfo {
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
+
+	public String getNameUpperCamel() {
+		return nameUpperCamel;
+	}
+
+	public void setNameUpperCamel(String nameUpperCamel) {
+		this.nameUpperCamel = nameUpperCamel;
+	}
+
+	public String getNameHeadUpperCamel() {
+		return nameHeadUpperCamel;
+	}
+
+	public void setNameHeadUpperCamel(String nameHeadUpperCamel) {
+		this.nameHeadUpperCamel = nameHeadUpperCamel;
+	}
+    
+    
 }

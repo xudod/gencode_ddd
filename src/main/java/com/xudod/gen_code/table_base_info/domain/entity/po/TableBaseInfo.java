@@ -24,6 +24,9 @@ public class TableBaseInfo {
     @ApiModelProperty(example = "表名称", position = 3)
     private String tableName;
 
+    @ApiModelProperty(example = "表中文名称", position = 3)
+    private String tableNameCn;
+
     @ApiModelProperty(example = "表格是否可以行编辑", position = 4)
     private String tableEdit;
 
@@ -117,7 +120,15 @@ public class TableBaseInfo {
         this.tableName = tableName;
     }
 
-    /**
+    public String getTableNameCn() {
+		return tableNameCn;
+	}
+
+	public void setTableNameCn(String tableNameCn) {
+		this.tableNameCn = tableNameCn;
+	}
+
+	/**
      * 表格是否可以行编辑
      * @return table_edit 表格是否可以行编辑
      */

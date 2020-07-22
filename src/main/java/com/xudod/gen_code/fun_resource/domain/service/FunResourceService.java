@@ -5,6 +5,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xudod.gen_code.common.PageParameter;
 import com.xudod.gen_code.fun_resource.domain.entity.po.FunResource;
+import com.xudod.gen_code.fun_resource.interfaces.vo.FunResourceTreeVo;
 
 
 /**
@@ -28,4 +29,6 @@ public interface FunResourceService {
 	/*代码分界end TODO*/
 	
 	List<FunResource> getAll();
+	
+	List<FunResourceTreeVo> getalltree(String sysCode);
 }

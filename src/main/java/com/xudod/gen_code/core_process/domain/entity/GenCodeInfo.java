@@ -6,7 +6,13 @@ import java.util.Map;
 
 import org.mybatis.generator.config.Context;
 
-public class GenCodeInfo extends GenProjectInfo {
+public class GenCodeInfo extends GenBaseInfo {
+	
+	public GenCodeInfo(){}
+	
+	public GenCodeInfo(String id){
+		this.setProjectId(id);
+	}
 	
 	/**
 	 * 项目生成文件夹路径数据

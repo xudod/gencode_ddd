@@ -1,6 +1,8 @@
 package com.xudod.gen_code.fun_resource.domain.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -18,6 +20,7 @@ import com.xudod.gen_code.common.GenId;
 import com.xudod.gen_code.common.PageParameter;
 import com.xudod.gen_code.fun_resource.domain.entity.po.FunResource;
 import com.xudod.gen_code.fun_resource.domain.mapper.FunResourceMapper;
+import com.xudod.gen_code.fun_resource.interfaces.vo.FunResourceTreeVo;
 
 /**
  *
@@ -122,6 +125,30 @@ public class FunResourceImp implements FunResourceService {
 	public List<FunResource> getAll() {
 		List<FunResource> res = funResourceMapper.getAll();
 		return res;
+	}
+
+	@Override
+	public List<FunResourceTreeVo> getalltree(String sysCode) {
+		List<FunResource> all = funResourceMapper.getAllOnlyMenu(sysCode);
+		List<FunResource> funResourceRoot = all.stream().filter(x -> (null == x.getPid() || "0".equals(x.getPid()))).collect(Collectors.toList());
+		List<FunResourceTreeVo> createTree = createTree(all, funResourceRoot);
+		return createTree;
+	}
+
+	private List<FunResourceTreeVo> createTree(List<FunResource> all, List<FunResource> funResourceRoot) {
+		List<FunResourceTreeVo> funResourceTreeVoList = new ArrayList<FunResourceTreeVo>();
+		FunResourceTreeVo funResourceTreeVo = new FunResourceTreeVo();
+		for (FunResource funR : funResourceRoot) {
+			funResourceTreeVo = new FunResourceTreeVo();
+			BeanUtils.copyProperties(funR, funResourceTreeVo);
+			List<FunResource> collect1 = all.stream().filter(x -> (funR.getCode().equals(x.getPid()))).collect(Collectors.toList());
+			if(null != collect1 && collect1.size() > 0) {
+				List<FunResourceTreeVo> createTree = createTree(all, collect1);
+				funResourceTreeVo.setFunResourceTreeVoList(createTree);
+			}
+			funResourceTreeVoList.add(funResourceTreeVo);
+		}
+		return funResourceTreeVoList;
 	}
 	
 }

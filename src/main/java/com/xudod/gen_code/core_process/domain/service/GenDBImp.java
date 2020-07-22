@@ -58,6 +58,38 @@ public class GenDBImp implements GenDBService {
 		return false;
 	}
 
+	//将领域作为数据库生成条件，因为现在采用的开发环境为一体开发，所以库不能分，要在一个库里，所以后边再考虑如何用这种办法。
+//	private void genOnlyDb(GenDBInfo genDBInfo) {
+//		try {
+//			ProjectInfo p = genDBInfo.getProjectInfo();
+//			String dbUrl = DbUtil.createDatabaseUrl(p.getDbIp(), p.getDbPort(), "init_project");
+//			Connection conn = DbUtil.getConnection(dbUrl, p.getDbUser(), p.getDbPassword());
+//			Statement stat = conn.createStatement();
+//			stat = (Statement) conn.createStatement();
+//			String existDbStr = "";
+//			List<DomainInfo> domainInfoList = genDBInfo.getDomainInfoList();
+//			for (DomainInfo domainInfo : domainInfoList) {
+//				ResultSet resultSet = stat.executeQuery("show databases like \"" + domainInfo.getDbName() + "_new\"");
+//				if (resultSet.next()) {
+//					existDbStr += domainInfo.getDbName();
+//				}
+//			}
+//			if(!"".equals(existDbStr)) {
+//				stat.close();
+//				DbUtil.closeConnection(conn);
+//				throw new RuntimeException("目标库中已经存在：" + existDbStr + "数据库！请检查！");
+//			}
+//			for (DomainInfo domainInfo : domainInfoList) {
+//				stat.executeUpdate("CREATE DATABASE " + domainInfo.getDbName() + "_new");
+//			}
+//			stat.close();
+//			DbUtil.closeConnection(conn);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
+	//一个项目生成一个库
 	private void genOnlyDb(GenDBInfo genDBInfo) {
 		try {
 			ProjectInfo p = genDBInfo.getProjectInfo();
@@ -66,21 +98,21 @@ public class GenDBImp implements GenDBService {
 			Statement stat = conn.createStatement();
 			stat = (Statement) conn.createStatement();
 			String existDbStr = "";
-			List<DomainInfo> domainInfoList = genDBInfo.getDomainInfoList();
-			for (DomainInfo domainInfo : domainInfoList) {
-				ResultSet resultSet = stat.executeQuery("show databases like \"" + domainInfo.getDbName() + "_new\"");
+			//List<DomainInfo> domainInfoList = genDBInfo.getDomainInfoList();
+			//for (DomainInfo domainInfo : domainInfoList) {
+				ResultSet resultSet = stat.executeQuery("show databases like \"" + genDBInfo.getProjectInfo().getProjectName() + "\"");
 				if (resultSet.next()) {
-					existDbStr += domainInfo.getDbName();
+					existDbStr += genDBInfo.getProjectInfo().getProjectName();
 				}
-			}
+			//}
 			if(!"".equals(existDbStr)) {
 				stat.close();
 				DbUtil.closeConnection(conn);
 				throw new RuntimeException("目标库中已经存在：" + existDbStr + "数据库！请检查！");
 			}
-			for (DomainInfo domainInfo : domainInfoList) {
-				stat.executeUpdate("CREATE DATABASE " + domainInfo.getDbName() + "_new");
-			}
+			//for (DomainInfo domainInfo : domainInfoList) {
+				stat.executeUpdate("CREATE DATABASE " + genDBInfo.getProjectInfo().getProjectName());
+			//}
 			stat.close();
 			DbUtil.closeConnection(conn);
 		} catch (SQLException e) {
@@ -88,56 +120,104 @@ public class GenDBImp implements GenDBService {
 		}
 	}
 	
+	//将领域作为数据库生成条件，因为现在采用的开发环境为一体开发，所以库不能分，要在一个库里，所以后边再考虑如何用这种办法。
+//	private void genTable(GenDBInfo genDBInfo) {
+//		List<DomainInfo> domainInfoList = genDBInfo.getDomainInfoList();
+//		List<TableBaseInfo> tableBaseInfoList = genDBInfo.getTableBaseInfoList();
+//		List<ColumnInfo> columnInfoList = genDBInfo.getColumnInfoList();
+//		for (DomainInfo domainInfo : domainInfoList) {
+//			//用领域中的数据库信息连接数据库
+//			String dbUrl = DbUtil.createDatabaseUrl(domainInfo.getDbIp(), domainInfo.getDbPort(), domainInfo.getDbName() + "_new");
+//			Connection conn = DbUtil.getConnection(dbUrl, domainInfo.getDbUser(), domainInfo.getDbPassword());
+//			Statement stat = null;
+//			try {
+//				stat = conn.createStatement();
+//				String id = domainInfo.getId();
+//				List<TableBaseInfo> tableList = tableBaseInfoList.stream().filter(x-> (id.equals(x.getDomainId()))).collect(Collectors.toList());
+//				for (TableBaseInfo tableBaseInfo : tableList) {
+//					String tableId = tableBaseInfo.getId();
+//					List<ColumnInfo> ColumnList = columnInfoList.stream().filter(x-> (tableId.equals(x.getTableId()))).collect(Collectors.toList());
+//					if(null == ColumnList || ColumnList.size() == 0) {
+//						continue;
+//					}
+//					//根据表名和字段信息，生成创建表sql
+//					String createTableStr = "CREATE TABLE IF NOT EXISTS `" + tableBaseInfo.getTableName() + "`  (\r\n";
+//						for (ColumnInfo columnInfo : ColumnList) {
+//							boolean a = (columnInfo.getColumnType().equals("char") || columnInfo.getColumnType().equals("varchar"));
+//							boolean b = "1".equals(columnInfo.getNullIs());
+//							createTableStr += 
+//									"`" + columnInfo.getName() + "` " +
+//									columnInfo.getColumnType() + "(" + 
+//									columnInfo.getColumnLen() + ")" + 
+//									(a ? " CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci " : "") +
+//									(b ? "NOT NULL" : "NULL DEFAULT NULL") + ",\r\n";
+//						}
+//						createTableStr += 
+//						"  PRIMARY KEY (`id`) USING BTREE\r\n" + 
+//						") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;";
+//					stat.executeUpdate(createTableStr);
+//				}
+//				DbUtil.closeStatement(stat);
+//				DbUtil.closeConnection(conn);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}finally {
+//				DbUtil.closeStatement(stat);
+//				DbUtil.closeConnection(conn);
+//			}
+//		}
+//	}
+	
 	private void genTable(GenDBInfo genDBInfo) {
-			List<DomainInfo> domainInfoList = genDBInfo.getDomainInfoList();
-			List<TableBaseInfo> tableBaseInfoList = genDBInfo.getTableBaseInfoList();
-			List<ColumnInfo> columnInfoList = genDBInfo.getColumnInfoList();
-			for (DomainInfo domainInfo : domainInfoList) {
-				//用领域中的数据库信息连接数据库
-				String dbUrl = DbUtil.createDatabaseUrl(domainInfo.getDbIp(), domainInfo.getDbPort(), domainInfo.getDbName() + "_new");
-				Connection conn = DbUtil.getConnection(dbUrl, domainInfo.getDbUser(), domainInfo.getDbPassword());
-				Statement stat = null;
-				try {
-					stat = conn.createStatement();
-					String id = domainInfo.getId();
-					List<TableBaseInfo> tableList = tableBaseInfoList.stream().filter(x-> (id.equals(x.getDomainId()))).collect(Collectors.toList());
-					for (TableBaseInfo tableBaseInfo : tableList) {
-						String tableId = tableBaseInfo.getId();
-						List<ColumnInfo> ColumnList = columnInfoList.stream().filter(x-> (tableId.equals(x.getTableId()))).collect(Collectors.toList());
-						if(null == ColumnList || ColumnList.size() == 0) {
-							continue;
-						}
-						//根据表名和字段信息，生成创建表sql
-						String createTableStr = "CREATE TABLE IF NOT EXISTS `" + tableBaseInfo.getTableName() + "`  (\r\n";
-							for (ColumnInfo columnInfo : ColumnList) {
-								boolean a = (columnInfo.getColumnType().equals("char") || columnInfo.getColumnType().equals("varchar"));
-								boolean b = "1".equals(columnInfo.getNullIs());
-								createTableStr += 
-										"`" + columnInfo.getName() + "` " +
-										columnInfo.getColumnType() + "(" + 
-										columnInfo.getColumnLen() + ")" + 
-										(a ? " CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci " : "") +
-										(b ? "NOT NULL" : "NULL DEFAULT NULL") + ",\r\n";
-							}
-							createTableStr += 
-							"  PRIMARY KEY (`id`) USING BTREE\r\n" + 
-							") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;";
-						stat.executeUpdate(createTableStr);
+		List<DomainInfo> domainInfoList = genDBInfo.getDomainInfoList();
+		List<TableBaseInfo> tableBaseInfoList = genDBInfo.getTableBaseInfoList();
+		List<ColumnInfo> columnInfoList = genDBInfo.getColumnInfoList();
+		for (DomainInfo domainInfo : domainInfoList) {
+			//用领域中的数据库信息连接数据库
+			String dbUrl = DbUtil.createDatabaseUrl(domainInfo.getDbIp(), domainInfo.getDbPort(), genDBInfo.getProjectInfo().getProjectName());
+			Connection conn = DbUtil.getConnection(dbUrl, domainInfo.getDbUser(), domainInfo.getDbPassword());
+			Statement stat = null;
+			try {
+				stat = conn.createStatement();
+				String id = domainInfo.getId();
+				List<TableBaseInfo> tableList = tableBaseInfoList.stream().filter(x-> (id.equals(x.getDomainId()))).collect(Collectors.toList());
+				for (TableBaseInfo tableBaseInfo : tableList) {
+					String tableId = tableBaseInfo.getId();
+					List<ColumnInfo> ColumnList = columnInfoList.stream().filter(x-> (tableId.equals(x.getTableId()))).collect(Collectors.toList());
+					if(null == ColumnList || ColumnList.size() == 0) {
+						continue;
 					}
-					DbUtil.closeStatement(stat);
-					DbUtil.closeConnection(conn);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}finally {
-					DbUtil.closeStatement(stat);
-					DbUtil.closeConnection(conn);
+					//根据表名和字段信息，生成创建表sql
+					String createTableStr = "CREATE TABLE IF NOT EXISTS `" + tableBaseInfo.getTableName() + "`  (\r\n";
+						for (ColumnInfo columnInfo : ColumnList) {
+							boolean a = (columnInfo.getColumnType().equals("char") || columnInfo.getColumnType().equals("varchar"));
+							boolean b = "1".equals(columnInfo.getNullIs());
+							createTableStr += 
+									"`" + columnInfo.getName() + "` " +
+									columnInfo.getColumnType() + "(" + 
+									columnInfo.getColumnLen() + ")" + 
+									(a ? " CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci " : "") +
+									(b ? "NOT NULL" : "NULL DEFAULT NULL") + ",\r\n";
+						}
+						createTableStr += 
+						"  PRIMARY KEY (`id`) USING BTREE\r\n" + 
+						") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;";
+					stat.executeUpdate(createTableStr);
 				}
+				DbUtil.closeStatement(stat);
+				DbUtil.closeConnection(conn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				DbUtil.closeStatement(stat);
+				DbUtil.closeConnection(conn);
 			}
-		
+		}
 	}
 	
 	// TODO 待改进，其中for循环能不能抽成一个方法
 	// TODO 有很多个类继承了GenProjectInfo类，能不能将这个方法抽成公共方法。
+	// 入参能不能使用泛型。
 	private void getProjectInfo(GenDBInfo genDBInfo) {
 		String projectId = genDBInfo.getProjectId();
 		ProjectInfo getbykey = projectInfoService.getbykey(projectId);

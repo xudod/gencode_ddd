@@ -5,6 +5,7 @@
     <id column="id" jdbcType="CHAR" property="id" />
     <result column="domain_id" jdbcType="CHAR" property="domainId" />
     <result column="table_name" jdbcType="VARCHAR" property="tableName" />
+    <result column="table_name_cn" jdbcType="VARCHAR" property="tableNameCn" />
     <result column="table_edit" jdbcType="VARCHAR" property="tableEdit" />
     <result column="sequence" jdbcType="INTEGER" property="sequence" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
@@ -19,7 +20,7 @@
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, domain_id, table_name, table_edit, sequence, remark, inf_status, status, version, 
+    id, domain_id, table_name, table_name_cn, table_edit, sequence, remark, inf_status, status, version, 
     deleted, client_type, create_by, create_time, modify_by, modify_time
   </sql>
 </mapper>

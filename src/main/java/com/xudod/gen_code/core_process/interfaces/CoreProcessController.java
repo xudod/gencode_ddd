@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xudod.gen_code.common.BaseResp;
 import com.xudod.gen_code.common.OnlyId;
 import com.xudod.gen_code.core_process.domain.service.GenDBService;
-import com.xudod.gencode.service.GenCodeService;
+import com.xudod.gen_code.core_process.domain.service.GenJavaProJectService;
+import com.xudod.gen_code.core_process.domain.service.GenVueProjectService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,21 +26,30 @@ import io.swagger.annotations.ApiOperation;
 public class CoreProcessController {
 
     @Autowired
-    GenCodeService genCodeService;
+    private GenJavaProJectService genJavaProJectService;
 
     @Autowired
-    GenDBService genDBService;
+    private GenDBService genDBService;
+    
+    @Autowired
+    private GenVueProjectService genVueProjectService;
 	
     @ApiOperation(value = "初始生成整个项目", notes = "初始生成整个项目")
     @RequestMapping(value = "genCodeAllProject", method=RequestMethod.POST, consumes= "application/json; charset=utf-8")
     ResponseEntity<BaseResp<Boolean>> genCodeAllProject(@RequestBody OnlyId pojo){
-        return new ResponseEntity<BaseResp<Boolean>> (BaseResp.returnRes(200, genCodeService.genCodeAllProject(pojo.getId()), "项目生成成功！"), HttpStatus.OK);
+        return new ResponseEntity<BaseResp<Boolean>> (BaseResp.returnRes(200, genJavaProJectService.genCodeAllProject(pojo.getId()), "项目生成成功！"), HttpStatus.OK);
     }
     
     @ApiOperation(value = "初始生成数据库表", notes = "初始生成数据库表")
     @RequestMapping(value = "genDB", method=RequestMethod.POST, consumes= "application/json; charset=utf-8")
     ResponseEntity<BaseResp<Boolean>> genDB(@RequestBody OnlyId pojo){
         return new ResponseEntity<BaseResp<Boolean>> (BaseResp.returnRes(200, genDBService.genDB(pojo.getId()), "项目生成成功！"), HttpStatus.OK);
+    }
+    
+    @ApiOperation(value = "初始生成项目前端项目文件", notes = "初始生成项目前端项目文件")
+    @RequestMapping(value = "genFrontProject", method=RequestMethod.POST, consumes= "application/json; charset=utf-8")
+    ResponseEntity<BaseResp<Boolean>> genFrontProject(@RequestBody OnlyId pojo){
+        return new ResponseEntity<BaseResp<Boolean>> (BaseResp.returnRes(200, genVueProjectService.genFrontProject(pojo.getId()), "项目生成成功！"), HttpStatus.OK);
     }
     
 }

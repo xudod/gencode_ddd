@@ -22,4 +22,7 @@ public interface FunResourceMapper extends BaseMapper<FunResource> {
 	
 	@Select("select id,show_name_cn,code,type,url from fun_resource")
 	List<FunResource> getAll();
+
+	@Select("select id, show_name_cn, code, url, pid from fun_resource where belong_sys = #{code, jdbcType=VARCHAR} and (type = 'MENU_ONE' or type = 'MENU_TWO') and deleted = '0'")
+	List<FunResource> getAllOnlyMenu(@Param("code") String code);
 }
